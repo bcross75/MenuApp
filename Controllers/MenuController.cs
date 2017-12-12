@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlClient;
 using MenuApp.Models;
+using MenuApp.Data;
 
 namespace MenuApp.Controllers
 {
@@ -15,23 +16,23 @@ namespace MenuApp.Controllers
         {
             var connectionString = @"Data Source =.\SQLExpress; Initial Catalog = Menu; Integrated Security = True";
             var connection = new SqlConnection(connectionString);
-            var command = new SqlCommand("select m.Name, m.Description, m.CalorieCount, m.Price, c.id as Categoryid from MenuItem m join Category c on m.CategoryId = c.Id", connection);
+            var command = new SqlCommand("select m.Id, m.Name, m.Description, m.CalorieCount, m.Price, c.id as Categoryid from MenuItem m join Category c on m.CategoryId = c.Id", connection);
             connection.Open();
             var reader = command.ExecuteReader();
-            var menuItems = new List<MenuItem>();
+            var menuItems = new List<MenuItemModel>();
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    menuItems.Add(new MenuItem
+                    menuItems.Add(new MenuItemModel
                     {
-                        Name = reader.GetString(0),
-                        Description = reader.GetString(1),
-                        CalorieCount = reader.GetInt32(2),
-                        Price = reader.GetDecimal(3).ToString("C"),
-                        Category = (Categories)reader.GetInt32(4)
-
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Description = reader.GetString(2),
+                        CalorieCount = reader.GetInt32(3),
+                        Price = reader.GetDecimal(4).ToString("C"),
+                        Category = (Categories)reader.GetInt32(5)
                     });
 
                 }
