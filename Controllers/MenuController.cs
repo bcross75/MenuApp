@@ -15,7 +15,7 @@ namespace MenuApp.Controllers
         {
             var connectionString = @"Data Source =.\SQLExpress; Initial Catalog = Menu; Integrated Security = True";
             var connection = new SqlConnection(connectionString);
-            var command = new SqlCommand("select m.Name, m.Description, m.CalorieCount, m.Price, c.Name as Category from MenuItem m join Category c on m.CategoryId = c.Id", connection);
+            var command = new SqlCommand("select m.Name, m.Description, m.CalorieCount, m.Price, c.id as Categoryid from MenuItem m join Category c on m.CategoryId = c.Id", connection);
             connection.Open();
             var reader = command.ExecuteReader();
             var menuItems = new List<MenuItem>();
@@ -29,15 +29,22 @@ namespace MenuApp.Controllers
                         Name = reader.GetString(0),
                         Description = reader.GetString(1),
                         CalorieCount = reader.GetInt32(2),
-                        Price = reader.GetDecimal(3),
-                        Category = reader.GetString(4)
+                        Price = reader.GetDecimal(3).ToString("C"),
+                        Category = (Categories)reader.GetInt32(4)
 
                     });
 
                 }
             }
             connection.Close();
-            return View(menuItems);
+            var menu = new Menu();
+            menu.Appetizers = menuItems.Where(x => x.Category == Categories.Appetizers).ToList();
+            menu.Salads = menuItems.Where(x => x.Category == Categories.Salads).ToList();
+            menu.Entrees = menuItems.Where(x => x.Category == Categories.Entrees).ToList();
+            menu.Desserts = menuItems.Where(x => x.Category == Categories.Desserts).ToList();
+            menu.Drinks = menuItems.Where(x => x.Category == Categories.Drinks).ToList();
+            menu.BarDrinks = menuItems.Where(x => x.Category == Categories.BarDrinks).ToList();
+            return View(menu);
         }
     }
 }

@@ -1,9 +1,59 @@
-﻿@model List<MenuApp.Models.MenuItem>
-<ul>
-@foreach (var menuItem in Model)
+﻿@model MenuApp.Models.Menu
+
+<h2>Appetizers</h2>
+
+@foreach (var menuItem in Model.Appetizers)
 {
-    <li>@menuItem.Name</li>
+    <div>
+     <h3>@menuItem.Name</h3>
+    </div>
+    <div>
+        <h4>@menuItem.Description</h4>
+        Calorie: @menuItem.CalorieCount
+        <h4 id="Price">@menuItem.Price</h4>
+    </div>
 }
-</ul>
+    <h2>Salads</h2>
+
+@foreach (var menuItem in Model.Salads)
+{
+     <div>
+      <h3>@menuItem.Name</h3>
+     </div>
+     <div>
+      <h4>@menuItem.Description</h4>
+         Calorie: @menuItem.CalorieCount
+      <h4 id="Price">@menuItem.Price</h4>
+     </div>
+}
+      <h2>Entrees</h2>
+
+@foreach (var menuItem in Model.Entrees)
+{
+     <div>
+      <h3>@menuItem.Name</h3>
+     </div>
+     <div>
+       <h4>@menuItem.Description</h4>
+           Calorie: @menuItem.CalorieCount
+       <h4 id="Price">@menuItem.Price</h4>
+     </div>
+}
+
+    <h2>Desserts</h2>
+
+@foreach (var menuItem in Model.Desserts)
+{
+    <div>
+        <h3>@menuItem.Name</h3>
+    </div>
+    <div>
+        <h4>@menuItem.Description</h4>
+        Calorie: @menuItem.CalorieCount
+        <h4 id="Price">@menuItem.Price</h4>
+    </div>
+}
+
+
 
 
