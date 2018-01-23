@@ -1,50 +1,54 @@
 ﻿@model MenuApp.Models.Menu
 
 <h2>Appetizers</h2>
+<hr/>
+<div class="row">
+    @foreach (var menuItem in Model.Appetizers)
+    {
+        <div class="col-md-6 menuItem">
+            <h3>@menuItem.Name</h3>
+            <div>
+                <a href="/MenuItem/Update/@menuItem.Id">Edit</a>
+                <h4>@menuItem.Description</h4>
+                Calorie: @menuItem.CalorieCount
+                <h4 class="Price">@menuItem.Price</h4>
+            </div>
+        </div>
+    }
+</div>
 
-@foreach (var menuItem in Model.Appetizers)
+
+<h2>Salads</h2>
+<hr />
+@foreach (var menuItem in Model.Salads)
 {
     <div>
-     <h3>@menuItem.Name</h3>
+        <h3>@menuItem.Name</h3>
     </div>
     <div>
         <a href="/MenuItem/Update/@menuItem.Id">Edit</a>
         <h4>@menuItem.Description</h4>
         Calorie: @menuItem.CalorieCount
-        <h4 id="Price">@menuItem.Price</h4>
+        <h4 class="Price">@menuItem.Price</h4>
     </div>
 }
-    <h2>Salads</h2>
-
-@foreach (var menuItem in Model.Salads)
-{
-     <div>
-      <h3>@menuItem.Name</h3>
-     </div>
-     <div>
-         <a href="/MenuItem/Update/@menuItem.Id">Edit</a>
-      <h4>@menuItem.Description</h4>
-         Calorie: @menuItem.CalorieCount
-      <h4 id="Price">@menuItem.Price</h4>
-     </div>
-}
-      <h2>Entrees</h2>
-
+<h2>Entrees</h2>
+<hr />
 @foreach (var menuItem in Model.Entrees)
 {
-     <div>
-      <h3>@menuItem.Name</h3>
-     </div>
-     <div>
-         <a href="/MenuItem/Update/@menuItem.Id">Edit</a>
-       <h4>@menuItem.Description</h4>
-           Calorie: @menuItem.CalorieCount
-       <h4 id="Price">@menuItem.Price</h4>
-     </div>
+    <div>
+        <h3>@menuItem.Name</h3>
+    </div>
+    <div>
+        <a href="/MenuItem/Update/@menuItem.Id">Edit</a>
+        <h4>@menuItem.Description</h4>
+        Calorie: @menuItem.CalorieCount
+        <h4 class="Price">@menuItem.Price</h4>
+    </div>
 }
 
-    <h2>Desserts</h2>
-
+<h2>Desserts</h2>
+<hr />
 @foreach (var menuItem in Model.Desserts)
 {
     <div>
@@ -54,10 +58,9 @@
         <a href="/MenuItem/Update/@menuItem.Id">Edit</a>
         <h4>@menuItem.Description</h4>
         Calorie: @menuItem.CalorieCount
-        <h4 id="Price">@menuItem.Price</h4>
+        <h4 class="Price">@menuItem.Price</h4>
     </div>
 }
-
 
 
 

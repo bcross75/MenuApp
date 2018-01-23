@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using MenuApp.Models;
-using System.Data.SqlClient;
 using MenuApp.Data;
 using System.Globalization;
 
@@ -14,30 +9,23 @@ namespace MenuApp.Controllers
     {   
         public ActionResult Create()
         {
-            return View();
+            return View(new MenuItemModel());
         }
         // GET: MenuItem
         [HttpPost]
         public ActionResult CreateMenuItem(MenuItemModel menuItem) 
         {
-            var connectionString = @"Data Source =.\SQLExpress; Initial Catalog = Menu; Integrated Security = True";
-            var connection = new SqlConnection(connectionString);
-            var command = new SqlCommand("INSERT INTO[dbo].[MenuItem]([Name],[Description],[CalorieCount],[Price],[CategoryId],[Active]) VALUES(@Name, @Description, @CalorieCount, @Price, @CategoryId, @Active)", connection);
-            command.Parameters.Add(new SqlParameter("@Name",menuItem.Name));
-            command.Parameters.Add(new SqlParameter("@Description",menuItem.Description));
-            command.Parameters.Add(new SqlParameter("@CalorieCount",menuItem.CalorieCount));
-            command.Parameters.Add(new SqlParameter("@Price",menuItem.Price));
-            command.Parameters.Add(new SqlParameter("@CategoryId",menuItem.Category));
-            command.Parameters.Add(new SqlParameter("@Active", menuItem.Active));
-            connection.Open();
-            var reader = command.ExecuteNonQuery();
-            var menuItems = new List<MenuItemModel>();
+            var repo = new MenuRepository();
+            repo.CreateMenuItem(menuItem);
             return Redirect("/Menu");
         }
-        public ActionResult Update(int id)
+        public ActionResult Update(int? id)
         {
+            if (!id.HasValue)
+                return Redirect("/Menu");
+
             var repo = new MenuRepository();
-            var menuitem = repo.GetMenuItem(id);
+            var menuitem = repo.GetMenuItem(id.Value);
             var model = Map(menuitem);
             return View(model);
         }

@@ -1,28 +1,15 @@
 ﻿@model MenuApp.Models.MenuItemModel
     <h2>Update Menu Item</h2>
 <form method="post" action="/MenuItem/UpdateMenuItem">
-    <input type="hidden" name="id" id="id" value="@Model.Id"/>
-    <div>
-        <input type="text" name="Name" id="Name" placeholder="Name" value="@Model.Name"/>
+    @Html.Partial("EditMenuItem")
+    <div class="checkbox">
+        <label>
+            @Html.CheckBox("Active", @Model.Active)
+            Active
+        </label>
     </div>
     <div>
-        <input type="text" name="Description" id="Description" placeholder="Description" value="@Model.Description" />
+        <input type="submit" value="Update Item"/>
     </div>
-    <div>
-        <input type="text" name="CalorieCount" id="CalorieCount" placeholder="CalorieCount" value="@Model.CalorieCount"/>
-    </div>
-    <div>
-        <input type="text" name="Price" id="Price" placeholder="Price" value="@Model.Price"/>
-    </div>
-    <div>
-        <input type="text" name="Category" id="Category" placeholder="Category" value="@Model.Category"/>
-    </div>
-    <div>
-        <input type="text" name="Active" id="Active" placeholder="Active" value="@Model.Active"/>
-    </div>
-    <div>
-        <input type="submit" value="Update Item" />
-    </div>
-
 </form>
 

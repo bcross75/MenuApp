@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlClient;
-using MenuApp.Models;
 using MenuApp.Data;
+using MenuApp.Models;
 
 namespace MenuApp.Controllers
 {
@@ -16,7 +14,7 @@ namespace MenuApp.Controllers
         {
             var connectionString = @"Data Source =.\SQLExpress; Initial Catalog = Menu; Integrated Security = True";
             var connection = new SqlConnection(connectionString);
-            var command = new SqlCommand("select m.Id, m.Name, m.Description, m.CalorieCount, m.Price, c.id as Categoryid from MenuItem m join Category c on m.CategoryId = c.Id", connection);
+            var command = new SqlCommand("select m.Id, m.Name, m.Description, m.CalorieCount, m.Price, c.id as Categoryid, m.Active from MenuItem m join Category c on m.CategoryId = c.Id where m.Active =1", connection);
             connection.Open();
             var reader = command.ExecuteReader();
             var menuItems = new List<MenuItemModel>();
@@ -32,7 +30,8 @@ namespace MenuApp.Controllers
                         Description = reader.GetString(2),
                         CalorieCount = reader.GetInt32(3),
                         Price = reader.GetDecimal(4).ToString("C"),
-                        Category = (Categories)reader.GetInt32(5)
+                        Category = (Categories)reader.GetInt32(5),
+                        Active = reader.GetBoolean(6)
                     });
 
                 }

@@ -1,26 +1,15 @@
-﻿
+﻿@model MenuApp.Models.MenuItemModel
 <h2>Create Menu Item</h2>
-<form method="post" action="/MenuItem/CreateMenuItem">
-    <div>
-        <input type="text" name="Name" id="Name" placeholder="Name" />
+<form id="create" method="post" action="/MenuItem/CreateMenuItem">
+    @Html.Partial("EditMenuItem")
+    <div class="checkbox">
+        <label>
+            @Html.CheckBox("Active", @Model.Active)
+            Active
+        </label>
     </div>
-    <div>
-        <input type="text" name="Description" id="Description" placeholder="Description" />
+    <div class="text-right">
+        <a href="/menu" class="btn btn-default">Cancel</a>
+        <input type="submit" class="btn btn-primary" value="Create Item"/>
     </div>
-    <div>
-        <input type="text" name="CalorieCount" id="CalorieCount" placeholder="CalorieCount" />
-    </div>
-    <div>
-        <input type="text" name="Price" id="Price" placeholder="Price" />
-    </div>
-    <div>
-        <input type="text" name="Category" id="Category" placeholder="Category" />
-    </div>
-    <div>
-        <input type="text" name="Active" id="Active" placeholder="Active" />
-    </div>
-    <div>
-    <input type="submit" value="Create Item"/>
-    </div>
-
 </form>
