@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
@@ -12,7 +13,7 @@ namespace MenuApp.Data
     public class MenuRepository
     {
            
-        public const string ConnectionString = @"Data Source =.\SQLExpress; Initial Catalog = Menu; Integrated Security = True";
+        public string ConnectionString = ConfigurationManager.ConnectionStrings["MenuContext"].ConnectionString;
 
         public MenuItem GetMenuItem(int id)
         {
@@ -69,6 +70,36 @@ namespace MenuApp.Data
             command.Parameters.Add(new SqlParameter("@Active", menuItem.Active));
             connection.Open();
             command.ExecuteNonQuery();
+        }
+
+        public Menu GetMenu(bool onlyactive)
+        {
+            var context = new MenuContext();
+            var menuItems = context.MenuItems.ToList();
+            var menuItemModels = menuItems.Select(x => new MenuItemModel
+                {
+                    Id = x.Id,
+                    Active = x.Active,
+                    CalorieCount = x.CalorieCount,
+                    Category = x.Category,
+                    Description = x.Description,
+                    Name = x.Name,
+                    Price = x.Price.ToString("C")
+                }).ToList();
+
+            
+            if (onlyactive)
+            {
+                menuItemModels = menuItemModels.Where(x => x.Active).ToList();
+            }
+            var menu = new Menu();
+            menu.Appetizers = menuItemModels.Where(x => x.Category == Categories.Appetizers).ToList();
+            menu.Salads = menuItemModels.Where(x => x.Category == Categories.Salads).ToList();
+            menu.Entrees = menuItemModels.Where(x => x.Category == Categories.Entrees).ToList();
+            menu.Desserts = menuItemModels.Where(x => x.Category == Categories.Desserts).ToList();
+            menu.Drinks = menuItemModels.Where(x => x.Category == Categories.Drinks).ToList();
+            menu.BarDrinks = menuItemModels.Where(x => x.Category == Categories.BarDrinks).ToList();
+            return menu;
         }
     }
 }

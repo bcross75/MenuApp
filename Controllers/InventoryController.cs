@@ -3,13 +3,13 @@ using MenuApp.Data;
 
 namespace MenuApp.Controllers
 {
-    public class MenuController : Controller
+    public class InventoryController : Controller
     {
-        // GET: Menu
+        // GET: Inventory
         public ActionResult Index()
         {
             var repository = new MenuRepository();
-            var menu = repository.GetMenu(true);
+            var menu = repository.GetMenu(false);
             return View(menu);
         }
     }

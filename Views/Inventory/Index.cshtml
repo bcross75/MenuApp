@@ -1,7 +1,7 @@
-﻿@model MenuApp.Models.Menu
+﻿@Model MenuApp.Models.Menu
 
 <h2>Appetizers</h2>
-<hr/>
+<hr />
 <div class="row">
     @foreach (var menuItem in Model.Appetizers)
     {
@@ -62,5 +62,33 @@
     </div>
 }
 
+<h2>Drinks</h2>
+<hr />
+@foreach (var menuItem in Model.Drinks)
+{
+    <div class="col-md-6 menuItem">
+        <h3>@menuItem.Name</h3>
+        <div>
+            <a href="/MenuItem/Update/@menuItem.Id">Edit</a>
+            <h4>@menuItem.Description</h4>
+            Calorie: @menuItem.CalorieCount
+            <h4 class="Price">@menuItem.Price</h4>
+        </div>
+    </div>
+}
 
+<h2>Bar Drinks</h2>
+<hr />
+@foreach (var menuItem in Model.BarDrinks)
+{
+    <div class="col-md-6 menuItem">
+        <h3>@menuItem.Name</h3>
+        <div>
+            <a href="/MenuItem/Update/@menuItem.Id">Edit</a>
+            <h4>@menuItem.Description</h4>
+            Calorie: @menuItem.CalorieCount
+            <h4 class="Price">@menuItem.Price</h4>
+        </div>
+    </div>
+}
 
