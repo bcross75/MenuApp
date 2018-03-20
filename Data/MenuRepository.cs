@@ -72,5 +72,17 @@ namespace MenuApp.Data
             menu.BarDrinks = menuItemModels.Where(x => x.Category == Categories.BarDrinks).ToList();
             return menu;
         }
+
+        public void DeleteMenuItem(int id)
+        {
+            var context = new MenuContext();
+            var existing = context.MenuItems.FirstOrDefault(x => x.Id == id);
+            if (existing != null)
+            {
+                context.MenuItems.Remove(existing);
+                context.SaveChanges();
+
+            }
+        }
     }
 }
