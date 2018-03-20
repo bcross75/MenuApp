@@ -59,17 +59,18 @@ namespace MenuApp.Data
         }
         public void CreateMenuItem(MenuItemModel menuItem)
         {
-            var connectionString = @"Data Source =.\SQLExpress; Initial Catalog = Menu; Integrated Security = True";
-            var connection = new SqlConnection(connectionString);
-            var command = new SqlCommand("INSERT INTO[dbo].[MenuItem]([Name],[Description],[CalorieCount],[Price],[CategoryId],[Active]) VALUES(@Name, @Description, @CalorieCount, @Price, @CategoryId, @Active)", connection);
-            command.Parameters.Add(new SqlParameter("@Name", menuItem.Name));
-            command.Parameters.Add(new SqlParameter("@Description", menuItem.Description));
-            command.Parameters.Add(new SqlParameter("@CalorieCount", menuItem.CalorieCount));
-            command.Parameters.Add(new SqlParameter("@Price", menuItem.Price));
-            command.Parameters.Add(new SqlParameter("@CategoryId", menuItem.Category));
-            command.Parameters.Add(new SqlParameter("@Active", menuItem.Active));
-            connection.Open();
-            command.ExecuteNonQuery();
+            var context = new MenuContext();
+            var price = decimal.Parse(menuItem.Price);
+            context.MenuItems.Add(new MenuItem
+            {
+                Name = menuItem.Name,
+                Description = menuItem.Description,
+                CalorieCount = menuItem.CalorieCount,
+                Price = price,
+                Category = menuItem.Category,
+                Active = menuItem.Active
+            });
+            context.SaveChanges();
         }
 
         public Menu GetMenu(bool onlyactive)

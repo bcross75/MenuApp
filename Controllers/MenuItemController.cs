@@ -2,6 +2,7 @@
 using MenuApp.Models;
 using MenuApp.Data;
 using System.Globalization;
+using System.Net;
 
 namespace MenuApp.Controllers
 {
@@ -13,8 +14,15 @@ namespace MenuApp.Controllers
         }
         // GET: MenuItem
         [HttpPost]
-        public ActionResult CreateMenuItem(MenuItemModel menuItem) 
+        public ActionResult CreateMenuItem(MenuItemModel menuItem)
         {
+            decimal price;
+            var valid = decimal.TryParse(menuItem.Price, out price);
+            if (!valid)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid Price.");
+            }
+        
             var repo = new MenuRepository();
             repo.CreateMenuItem(menuItem);
             return Redirect("/Menu");
