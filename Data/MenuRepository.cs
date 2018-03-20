@@ -17,31 +17,7 @@ namespace MenuApp.Data
 
         public MenuItem GetMenuItem(int id)
         {
-            var connection = new SqlConnection(ConnectionString);
-           
-            var command = new SqlCommand("select id, Name, Description, CalorieCount, Price, Categoryid, active from MenuItem where id =@id", connection);
-            command.Parameters.Add(new SqlParameter("@id", id));
-            connection.Open();
-            var reader = command.ExecuteReader();
-            MenuItem menuItem = null;
-
-            if (reader.HasRows)
-            {
-                reader.Read();
-                
-                menuItem = new MenuItem
-                    {
-                        Id = reader.GetInt32(0),
-                        Name = reader.GetString(1),
-                        Description = reader.GetString(2),
-                        CalorieCount = reader.GetInt32(3),
-                        Price = reader.GetDecimal(4),
-                        Category = (Categories)reader.GetInt32(5),
-                        Active = reader.GetBoolean(6)
-                    };
-            }
-            connection.Close();
-            return menuItem;
+            return new MenuContext().MenuItems.FirstOrDefault(x => x.Id == id);
         }
         public void UpdateMenuItem(MenuItem menuItem)
         {
