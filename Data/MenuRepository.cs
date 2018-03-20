@@ -45,31 +45,25 @@ namespace MenuApp.Data
         }
         public void UpdateMenuItem(MenuItem menuItem)
         {
-            var connection = new SqlConnection(ConnectionString);
-            var command = new SqlCommand("Update dbo.MenuItem Set Name = @Name,Description = @Description,CalorieCount = @CalorieCount,Price = @Price,CategoryId = @CategoryId,Active = @Active Where id = @id", connection);
-            command.Parameters.Add(new SqlParameter("@Id", menuItem.Id));
-            command.Parameters.Add(new SqlParameter("@Name", menuItem.Name));
-            command.Parameters.Add(new SqlParameter("@Description", menuItem.Description));
-            command.Parameters.Add(new SqlParameter("@CalorieCount", menuItem.CalorieCount));
-            command.Parameters.Add(new SqlParameter("@Price", menuItem.Price));
-            command.Parameters.Add(new SqlParameter("@CategoryId", menuItem.Category));
-            command.Parameters.Add(new SqlParameter("@Active", menuItem.Active));
-            connection.Open();
-            var reader = command.ExecuteNonQuery();
+            var context = new MenuContext();
+            var existing = context.MenuItems.FirstOrDefault(x => x.Id == menuItem.Id);
+            if (existing != null)
+            {
+                existing.Name = menuItem.Name;
+                existing.Description = menuItem.Description;
+                existing.CalorieCount = menuItem.CalorieCount;
+                existing.Price = menuItem.Price;
+                existing.Category = menuItem.Category;
+                existing.Active = menuItem.Active;
+            }
+
+            context.SaveChanges();
         }
-        public void CreateMenuItem(MenuItemModel menuItem)
+
+        public void CreateMenuItem(MenuItem menuItem)
         {
             var context = new MenuContext();
-            var price = decimal.Parse(menuItem.Price);
-            context.MenuItems.Add(new MenuItem
-            {
-                Name = menuItem.Name,
-                Description = menuItem.Description,
-                CalorieCount = menuItem.CalorieCount,
-                Price = price,
-                Category = menuItem.Category,
-                Active = menuItem.Active
-            });
+            context.MenuItems.Add(menuItem);
             context.SaveChanges();
         }
 

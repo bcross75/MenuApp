@@ -24,7 +24,7 @@ namespace MenuApp.Controllers
             }
         
             var repo = new MenuRepository();
-            repo.CreateMenuItem(menuItem);
+            repo.CreateMenuItem(Map(menuItem));
             return Redirect("/Menu");
         }
         public ActionResult Update(int? id)
