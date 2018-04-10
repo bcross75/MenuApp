@@ -1,4 +1,4 @@
-﻿@Model MenuApp.Models.Menu
+﻿@model MenuApp.Models.Menu
 
 <h2>Appetizers</h2>
 <hr />
@@ -13,7 +13,11 @@
                 Calorie: @menuItem.CalorieCount
                 <h4 class="Price">@menuItem.Price</h4>
             </div>
+            <form method="post" action="/MenuItem/DeleteMenuItem/@menuItem.Id">
+                <input class="btn btn-link" type="submit" value="Delete Item"/>
+            </form>
         </div>
+       
     }
 </div>
 
@@ -30,6 +34,9 @@
             Calorie: @menuItem.CalorieCount
             <h4 class="Price">@menuItem.Price</h4>
         </div>
+        <form method="post" action="/MenuItem/DeleteMenuItem/@menuItem.Id">
+            <input class="btn btn-link" type="submit" value="Delete Item"/>
+        </form>
     </div>
 }
 <h2>Entrees</h2>
@@ -44,6 +51,9 @@
             Calorie: @menuItem.CalorieCount
             <h4 class="Price">@menuItem.Price</h4>
         </div>
+        <form method="post" action="/MenuItem/DeleteMenuItem/@menuItem.Id">
+            <input class="btn btn-link" type="submit" value="Delete Item"/>
+        </form>
     </div>
 }
 
@@ -59,6 +69,9 @@
             Calorie: @menuItem.CalorieCount
             <h4 class="Price">@menuItem.Price</h4>
         </div>
+        <form method="post" action="/MenuItem/DeleteMenuItem/@menuItem.Id">
+            <input class="btn btn-link" type="submit" value="Delete Item"/>
+        </form>
     </div>
 }
 
@@ -74,6 +87,9 @@
             Calorie: @menuItem.CalorieCount
             <h4 class="Price">@menuItem.Price</h4>
         </div>
+        <form method="post" action="/MenuItem/DeleteMenuItem/@menuItem.Id">
+            <input class="btn btn-link" type="submit" value="Delete Item"/>
+        </form>
     </div>
 }
 
@@ -89,6 +105,9 @@
             Calorie: @menuItem.CalorieCount
             <h4 class="Price">@menuItem.Price</h4>
         </div>
+        <form method="post" action="/MenuItem/DeleteMenuItem/@menuItem.Id">
+            <input class="btn btn-link" type="submit" value="Delete Item"/>
+        </form>
     </div>
 }
 

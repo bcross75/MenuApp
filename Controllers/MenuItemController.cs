@@ -27,6 +27,16 @@ namespace MenuApp.Controllers
             repo.CreateMenuItem(Map(menuItem));
             return Redirect("/Menu");
         }
+        [HttpPost]
+        public ActionResult DeleteMenuItem(int? id)
+        {
+            if(!id.HasValue)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Id Required.");
+            var repo = new MenuRepository();
+            repo.DeleteMenuItem(id.Value);
+            return Redirect("/Inventory");
+        }
+
         public ActionResult Update(int? id)
         {
             if (!id.HasValue)
