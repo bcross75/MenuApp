@@ -5,11 +5,16 @@ namespace MenuApp.Controllers
 {
     public class MenuController : Controller
     {
+        private readonly IMenuRepository _repository;
+
+        public MenuController(IMenuRepository repository)
+        {
+            _repository = repository;
+        }
         // GET: Menu
         public ActionResult Index()
         {
-            var repository = new MenuRepository();
-            var menu = repository.GetMenu(true);
+            var menu = _repository.GetMenu(true);
             return View(menu);
         }
     }

@@ -7,7 +7,12 @@ using System.Net;
 namespace MenuApp.Controllers
 {
     public class MenuItemController : Controller
-    {   
+    {
+        private readonly IMenuRepository _repository;
+        public MenuItemController(IMenuRepository repository)
+        {
+            _repository = repository;
+        }
         public ActionResult Create()
         {
             return View(new MenuItemModel());
@@ -23,8 +28,8 @@ namespace MenuApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid Price.");
             }
         
-            var repo = new MenuRepository();
-            repo.CreateMenuItem(Map(menuItem));
+
+            _repository.CreateMenuItem(Map(menuItem));
             return Redirect("/Menu");
         }
         [HttpPost]
@@ -32,8 +37,7 @@ namespace MenuApp.Controllers
         {
             if(!id.HasValue)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Id Required.");
-            var repo = new MenuRepository();
-            repo.DeleteMenuItem(id.Value);
+            _repository.DeleteMenuItem(id.Value);
             return Redirect("/Inventory");
         }
 
@@ -42,8 +46,7 @@ namespace MenuApp.Controllers
             if (!id.HasValue)
                 return Redirect("/Menu");
 
-            var repo = new MenuRepository();
-            var menuitem = repo.GetMenuItem(id.Value);
+            var menuitem = _repository.GetMenuItem(id.Value);
             var model = Map(menuitem);
             return View(model);
         }
@@ -51,9 +54,8 @@ namespace MenuApp.Controllers
         [HttpPost]
         public ActionResult UpdateMenuItem(MenuItemModel menuItemmodel)
         {
-            var repo = new MenuRepository();
             var menuitem = Map(menuItemmodel);
-            repo.UpdateMenuItem(menuitem);
+            _repository.UpdateMenuItem(menuitem);
             return Redirect("/Menu");
         }
 

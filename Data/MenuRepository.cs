@@ -10,10 +10,18 @@ using MenuApp.Controllers;
 
 namespace MenuApp.Data
 {
-    public class MenuRepository
+    public interface IMenuRepository
+    {
+        MenuItem GetMenuItem(int id);
+        void UpdateMenuItem(MenuItem menuItem);
+        void CreateMenuItem(MenuItem menuItem);
+        Menu GetMenu(bool onlyactive);
+        void DeleteMenuItem(int id);
+    }
+
+    public class MenuRepository : IMenuRepository
     {
            
-        public string ConnectionString = ConfigurationManager.ConnectionStrings["MenuContext"].ConnectionString;
 
         public MenuItem GetMenuItem(int id)
         {
